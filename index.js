@@ -22,8 +22,7 @@ function main () {
    {
     	getworkitemid(vm.env);
    } else {
-        // core.setFailed();
-       core.setFailed(err.toString());
+        core.setFailed();
    }
     
 }
@@ -34,7 +33,9 @@ async function getworkitemid (env) {
     let auth = 'token ' + env.ghtoken;
     h.append ('Authorization', auth );
     try {   
+            // const requesturl = "https://api.github.com/repos/" + env.ghrepo_owner + "/" + env.ghrepo + "/pulls/" + env.pull_number;
             const requesturl = "https://github.techtrend.us/api/v3/repos/" + env.ghrepo_owner + "/" + env.ghrepo + "/pulls/" + env.pull_number;
+            // const requesturl = "https://github.techtrend.us/api/v3/" + env.ghrepo_owner + "/" + env.ghrepo + "/pulls/" + env.pull_number;
             const response= await fetch (requesturl, {
                method: 'GET', 
                headers:h
@@ -56,10 +57,7 @@ async function getworkitemid (env) {
              }
 
         } catch (err){
-        // core.setFailed(err);
-        // const passErrorAsAStringBecauseItsRequired = err.toString()
-        // core.setFailed(passErrorAsAStringBecauseItsRequired)
-        core.setFailed(err.toString());
+            core.setFailed(err);
         }
     try {
             // const newrequesturl = "https://api.github.com/repos/"+env.ghrepo_owner+"/"+env.ghrepo+"/pulls/"+env.pull_number+"/merge";    
@@ -83,10 +81,7 @@ async function getworkitemid (env) {
             }
 
         } catch (err){
-        // core.setFailed(err.message);
-        // const passErrorAsAStringBecauseItsRequired = err.toString()
-        // core.setFailed(passErrorAsAStringBecauseItsRequired)
-        core.setFailed(err.toString());
+            core.setFailed(err.message);
         }   
 }
 
@@ -216,10 +211,7 @@ async function updateworkitem(workItemId,env,pullstatus) {
             console.log("Work Item State Updated");
 
     } catch (err){
-        // core.setFailed(err.message);
-        // const passErrorAsAStringBecauseItsRequired = err.toString()
-        // core.setFailed(passErrorAsAStringBecauseItsRequired)
-        core.setFailed(err.toString());
+        core.setFailed(err.message);
     }	
 }
 
@@ -230,6 +222,7 @@ function getValuesFromPayload(payload,env)
 
         env : {
             organization: env.ado_organization != undefined ? env.ado_organization : "",
+            // orgUrl: env.ado_organization != undefined ? "https://devops.azurecloudgov.us/" + env.ado_organization : "",
             orgUrl: env.ado_organization != undefined ? "https://dev.azure.com/" + env.ado_organization : "",
             adoToken: env.ado_token != undefined ? env.ado_token : "",
             project: env.ado_project != undefined ? env.ado_project : "",
