@@ -74,7 +74,7 @@ jobs:
     runs-on: self-hosted
     name: Test workflow
     steps:       
-    - uses: synced-actions/github-actions-pr-sync@main
+    - uses: synced-actions/github-actions-pr-update-work-item-state-ac@main
       env: 
         gh_token : '${{ secrets.GH_TOKEN }}'   
         ado_token: '${{ secrets.ADO_PERSONAL_ACCESS_TOKEN }}'
